@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     // If main process.
     if(process_rank == 0) {
         int sequence_length;
-        fputs("Input sequence length: \n", stdout);
+        fputs("Input sequence length: ", stdout);
         read_int(&sequence_length);
 
         int* sequence = (int*) calloc(sequence_length , sizeof(int));
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
         MPI_Recv(sequence, sequence_length, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
         // Distribute the workload to the processes.
-        for(int i = process_rank - 1; i < process_count - 1; i += (process_count - 1) + 1) {
+        for(int i = process_rank - 1; i < sequence_length - 1; i += (process_count - 1)) {
             // if nth element is less than n+1th element (aka not in ascending order).
             if(sequence[i] > sequence[i + 1]) {
                 order_breaks_after = i;
