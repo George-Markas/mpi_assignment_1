@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     // If main process.
     if(process_rank == 0) {
         int sequence_length;
-        fputs("Input sequence length: ", stdout);
+        puts("Input sequence length: ");
         read_int(&sequence_length);
 
         int* sequence = (int*) calloc(sequence_length , sizeof(int));
