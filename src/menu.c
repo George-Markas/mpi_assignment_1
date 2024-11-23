@@ -3,24 +3,6 @@
 #include <mpi.h>
 #include "read_int.h"
 
-void wipe_previous_input() {
-	// Regarding VT100 escape codes:
-	// https://web.archive.org/web/20121225024852/http://www.climagic.org/mirrors/VT100_Escape_Codes.html
-
-	// Save cursor position
-	system("echo \033[s");
-
-	// Move 4 characters right
-//	system("echo \033[4C");
-
-	// Clear the rest of the line
-	system("echo \033[0K");
-
-	// Restore cursor to its original position
-	system("echo \033[u");
-//	fflush(stdout);
-}
-
 void menu() {
   	invalid_option:
   	system("clear");
