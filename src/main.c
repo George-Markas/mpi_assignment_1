@@ -24,9 +24,8 @@ int main(int argc, char* argv[]) {
         int* sequence = (int*) calloc(sequence_length , sizeof(int));
 
         for(int i = 0; i < sequence_length; i++) {
-            printf("Input number (%d/%d): ", i + 1, sequence_length);
+            printf("\nInput number (%d/%d): \n", i + 1, sequence_length);
             read_int(&sequence[i]);
-            putc('\n', stdout);
         }
 
         // Iterator starts from 1 since process 0 isn't responsible for handling the sort verification.
@@ -50,7 +49,7 @@ int main(int argc, char* argv[]) {
             puts("Array is in ascending order\n");
         }
         else
-            printf("Sequence is not in ascending order, breakpoint at: %d\n", order_breaks_after);
+            printf("\nSequence is not in ascending order, breakpoint at: %d\n", order_breaks_after);
 
         free(sequence);
         sequence = NULL;
@@ -71,7 +70,8 @@ int main(int argc, char* argv[]) {
         for(int i = process_rank - 1; i < sequence_length - 1; i += (process_count - 1)) {
             // if nth element is less than n+1th element (aka not in ascending order).
             if(sequence[i] > sequence[i + 1]) {
-                order_breaks_after = i;
+                printf("Rank: %d compares: %d - %d\n", process_rank, sequence[i], sequence[i + 1]);
+				order_breaks_after = i;
             }
         }
 
