@@ -14,13 +14,13 @@ void menu() {
           " └───────────────────────────┘\n", stdout);
 
 	int option;
-    read_int(&option);
+   	read_int(&option);
 	if((option != 1) && (option != 2)) {
-          goto invalid_option;
+        	goto invalid_option;
 	}
 
 	if(option == 2) {
-		// Terminate program, finalize hangs so abort is used. Run with quiet option to
+	// Terminate program, finalize hangs so abort is used. Run with quiet option to
         // suppress the error.
         MPI_Abort(MPI_COMM_WORLD, 1);
 		exit(0);
