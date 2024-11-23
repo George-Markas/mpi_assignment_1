@@ -15,22 +15,18 @@ int main(int argc, char* argv[]) {
     int process_count;
     MPI_Comm_size(MPI_COMM_WORLD, &process_count);
 
-    // If main process (rank 0).
-    if(!process_rank) {
+    // If main process.
+    if(process_rank == 0) {
         int sequence_length;
-        fputs("Input sequence length: ", stdout);
+        fputs("Input sequence length: \n", stdout);
         read_int(&sequence_length);
-        fputc('\n', stdout);
 
         int* sequence = (int*) calloc(sequence_length , sizeof(int));
 
         for(int i = 0; i < sequence_length; i++) {
             printf("Input number (%d/%d): ", i + 1, sequence_length);
             read_int(&sequence[i]);
-            // Regarding VT100 escape codes:
-            // https://web.archive.org/web/20121225024852/http://www.climagic.org/mirrors/VT100_Escape_Codes.html
-            fputs("\33[2K\r", stdout);
-            fflush(stdout);
+            putc('\n', stdout);
         }
 
         // Iterator starts from 1 since process 0 isn't responsible for handling the sort verification.
