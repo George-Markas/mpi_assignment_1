@@ -6,10 +6,12 @@ set(CMAKE_C_STANDARD 11)
 set(SOURCES
     src/main.c
     src/read_int.c
+    src/menu.c
 )
 
 set(HEADERS
     include/read_int.h
+    include/menu.h
 )
 
 # Add MPI Package to Project

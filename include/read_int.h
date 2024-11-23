@@ -1,6 +1,6 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef READ_INT_H
+#define READ_INT_H
 
 int read_int(int *var);
 
-#endif //UTILS_H
+#endif //READ_INT_H

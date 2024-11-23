@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <mpi.h>
 #include "read_int.h"
+#include "menu.h"
+
+// REMOVE AFTER
+#include <windows.h>
 
 int main(int argc, char *argv[]) {
     // Initialize MPI
@@ -14,6 +18,10 @@ int main(int argc, char *argv[]) {
 
     // If main process
     if(!process_id) {
+        // debug
+        SetConsoleOutputCP(CP_UTF8);
+        menu();
+
         int length;
         // Newline needed for flushing stdout
         printf("Input the length of the sequence:\n");
