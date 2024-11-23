@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
         }
 
         if(!k) {
-            printf("Sequence in ascending order.\n");
+            printf("Sequence is in ascending order.\n");
         }
         else {
             int first_to_fail = fail_points[0];
