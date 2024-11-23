@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
+#include "read_int.h"
 
 int main(int argc, char *argv[]) {
     // Initialize MPI
@@ -16,14 +17,14 @@ int main(int argc, char *argv[]) {
         int length;
         // Newline needed for flushing stdout
         printf("Input the length of the sequence:\n");
-        scanf("%d", &length);
+        read_int( &length);
         putc('\n', stdout);
 
         int* array = (int*) malloc(length * sizeof(int));
         // Read sequence numbers
         for(int i = 0; i < length; i++) {
             printf("Input number (%d/%d):\n", i + 1, length);
-            scanf("%d", &array[i]);
+            read_int( &array[i]);
             putc('\n', stdout);
         }
 
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
         for(int i = 1; i < process_count; i++) {
             // Receive if process i found a point at which the order was no longer adhered to
             MPI_Recv(&answer, 1, MPI_INT, i, 0 , MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-            // if answer is non zero because the allocation was done with calloc, therefore 0 means no error spotted
+            // if answer is non-zero because the allocation was done with calloc, therefore 0 means no error spotted
             if(answer > 0) {
                 fail_points[k] = answer;
                 k++;
@@ -58,7 +59,7 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-            printf("Order breaks at: %d",first_to_fail);
+            printf("Order breaks after element %d.",first_to_fail);
         }
 
         free(array);
@@ -79,7 +80,8 @@ int main(int argc, char *argv[]) {
         MPI_Recv(array, sequence_length, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
         for(int i = process_id - 1; i < sequence_length - 1; i += (process_count - 1)) {
-            printf("Process %d comparing %d - %d\n", process_id, array[i], array[i + 1]);
+            // Debug, uncomment to use for visualization if needed
+            // printf("Process %d comparing %d - %d\n", process_id, array[i], array[i + 1]);
             if(array[i] > array[i + 1]) {
                 order_breaks_after = i;
                 break;
