@@ -4,9 +4,6 @@
 #include "read_int.h"
 #include "menu.h"
 
-// REMOVE AFTER
-#include <windows.h>
-
 int main(int argc, char *argv[]) {
     // Initialize MPI
     MPI_Init(&argc, &argv);
@@ -18,8 +15,6 @@ int main(int argc, char *argv[]) {
 
     // If main process
     if(!process_id) {
-        // debug
-        SetConsoleOutputCP(CP_UTF8);
         menu();
 
         int length;
@@ -67,7 +62,7 @@ int main(int argc, char *argv[]) {
                 }
             }
 
-            printf("Order breaks after element %d.",first_to_fail);
+            printf("Order breaks after element %d.\n", first_to_fail + 1);
         }
 
         free(array);
