@@ -22,7 +22,7 @@ void menu() {
 	if(option == 2) {
 	// Terminate program, finalize hangs so abort is used. Run with quiet option to
         // suppress the error.
-        MPI_Abort(MPI_COMM_WORLD, 1);
+		MPI_Abort(MPI_COMM_WORLD, 1);
 		exit(0);
 	}
 
