@@ -89,8 +89,7 @@ int main(int argc, char *argv[]) {
             MPI_Recv(array, sequence_length, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
             for(int i = process_id - 1; i < sequence_length - 1; i += (process_count - 1)) {
-                // Debug, uncomment to use for visualization if needed
-                // printf("Process %d comparing %d - %d\n", process_id, array[i], array[i + 1]);
+                // Check if ith element is greater than i+1th, and thus not in ascending order
                 if(array[i] > array[i + 1]) {
                     order_breaks_after = i;
                     break;
@@ -102,8 +101,5 @@ int main(int argc, char *argv[]) {
             free(array);
             array = NULL;
         }
-
-        // Done
-        // MPI_Finalize();
     }
 }
