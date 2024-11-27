@@ -7,11 +7,13 @@ set(SOURCES
     src/main.c
     src/read_int.c
     src/menu.c
+    src/input_sanitizer.c
 )
 
 set(HEADERS
     include/read_int.h
     include/menu.h
+    include/input_sanitizer.h
 )
 
 # Add MPI Package to Project

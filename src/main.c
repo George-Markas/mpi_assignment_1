@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <mpi.h>
 #include "read_int.h"
 #include "menu.h"
@@ -11,6 +10,7 @@ int main(int argc, char *argv[]) {
 
     // Run repeatedly unless user explicitly exits via menu option 2
     while(1) {
+
         // Get rank and task count
         int process_id, process_count;
         MPI_Comm_rank(MPI_COMM_WORLD, &process_id);
@@ -21,16 +21,16 @@ int main(int argc, char *argv[]) {
             menu();
 
             int length;
-            // Newline needed for flushing stdout
-            printf("Input the length of the sequence:\n");
-            read_int( &length);
+            puts("Input the length of the sequence:");
+
+            read_int(&length, 1, 0);
             putc('\n', stdout);
 
             int* array = (int*) malloc(length * sizeof(int));
             // Read sequence numbers
             for(int i = 0; i < length; i++) {
                 printf("Input number (%d/%d):\n", i + 1, length);
-                read_int( &array[i]);
+                read_int(&array[i], 1, 1);
                 putc('\n', stdout);
             }
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
             }
 
             if(!k) {
-                printf("(\033[0;32mYES\033[0m) Sequence is in ascending order.\n");
+                puts("(\033[0;32mYES\033[0m) Sequence is in ascending order.");
             }
             else {
                 int first_to_fail = fail_points[0];
