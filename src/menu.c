@@ -20,8 +20,8 @@ void menu() {
 	}
 
 	if(option == 2) {
-	// Terminate program, finalize hangs so abort is used. Run with quiet option to
-        // suppress the error.
+		/* Terminating, MPI_Finalize() hangs so MPI_Abort() is required. May or may not show a warning
+		based on MPI implementation used, suppress by piping output to /dev/null if needed. */
 		MPI_Abort(MPI_COMM_WORLD, 1);
 		exit(0);
 	}

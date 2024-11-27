@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <mpi.h>
 #include "read_int.h"
 #include "menu.h"
@@ -10,7 +11,6 @@ int main(int argc, char *argv[]) {
 
     // Run repeatedly unless user explicitly exits via menu option 2
     while(1) {
-
         // Get rank and task count
         int process_id, process_count;
         MPI_Comm_rank(MPI_COMM_WORLD, &process_id);
@@ -48,14 +48,15 @@ int main(int argc, char *argv[]) {
                 // Receive if process i found a point at which the order was no longer adhered to
                 MPI_Recv(&answer, 1, MPI_INT, i, 0 , MPI_COMM_WORLD, MPI_STATUS_IGNORE);
                 // if answer is non-zero because the allocation was done with calloc, therefore 0 means no error spotted
-                if(answer > 0) {
+
+                if(answer != -1) {
                     fail_points[k] = answer;
                     k++;
                 }
             }
 
             if(!k) {
-                printf("(\033[0;32mYes\033[0m) Sequence is in ascending order.\n");
+                printf("(\033[0;32mYES\033[0m) Sequence is in ascending order.\n");
             }
             else {
                 int first_to_fail = fail_points[0];
@@ -65,7 +66,27 @@ int main(int argc, char *argv[]) {
                     }
                 }
 
-                printf("(\033[0;31mNo\033[0m) Order breaks after element %d.\n", first_to_fail + 1);
+                // For grammatical consistency
+                char *nth = NULL;
+                switch(first_to_fail) {
+                    case 0:
+                        nth = "st";
+                        break;
+
+                    case 1:
+                        nth = "nd";
+                        break;
+
+                    case 2:
+                        nth = "rd";
+                        break;
+
+                    default:
+                        nth = "th";
+                        break;
+                }
+
+                printf("(\033[0;31mNO\033[0m) Order breaks after %d%s element.\n", first_to_fail + 1, nth);
             }
 
             puts("\n\033[3mPress any key to continue...\033[0m");
@@ -78,7 +99,7 @@ int main(int argc, char *argv[]) {
             fail_points = NULL;
         }
         else {
-            int order_breaks_after = 0;
+            int order_breaks_after = -1; // default, not index-compliant value to indicate no order break was reported
             int sequence_length;
 
             // Receive sequence length
