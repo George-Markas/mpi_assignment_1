@@ -18,6 +18,10 @@ int input_sanitizer(const char *buffer, int allow_negative) {
         }
     }
 
+    // In case input is just a newline
+    if(buffer[i] == '\n')
+        return 0;
+
     for(; buffer[i] != '\n'; i++) {
         if(!isdigit(buffer[i]))
             return 0;

@@ -4,6 +4,9 @@
 #include "read_int.h"
 #include "menu.h"
 
+// Non-negative and integer check
+#define valid_input(x) ((x) >= 0 && (x) == (int)(x))
+
 int main(int argc, char *argv[]) {
     // Initialize MPI
     MPI_Init(&argc, &argv);
@@ -23,14 +26,18 @@ int main(int argc, char *argv[]) {
             int length;
             puts("Input the length of the sequence:");
 
-            read_int(&length, 1, 0);
+            read_int(&length);
+            while(!valid_input(length)) {
+
+            }
+
             putc('\n', stdout);
 
             int* array = (int*) malloc(length * sizeof(int));
             // Read sequence numbers
             for(int i = 0; i < length; i++) {
                 printf("Input number (%d/%d):\n", i + 1, length);
-                read_int(&array[i], 1, 1);
+                read_int( &array[i]);
                 putc('\n', stdout);
             }
 
