@@ -42,4 +42,5 @@ int read_int(int* var, ...) {
 
     const int val = (int) strtol(buffer, NULL, 10);
     *var = val;
+    return EXIT_SUCCESS;
 }

@@ -25,12 +25,7 @@ int main(int argc, char *argv[]) {
 
             int length;
             puts("Input the length of the sequence:");
-
-            read_int(&length);
-            while(!valid_input(length)) {
-
-            }
-
+            read_int(&length, 1, 0);
             putc('\n', stdout);
 
             int* array = (int*) malloc(length * sizeof(int));
